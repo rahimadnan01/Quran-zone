@@ -4,7 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken"
 
-const verifyJwt = wrapAsync(async (req, res) => {
+const verifyJwt = wrapAsync(async (req, res, next) => {
     try {
         const token = req.cookies?.accessToken || req.header("Authorization").replace("Bearer", "")
 

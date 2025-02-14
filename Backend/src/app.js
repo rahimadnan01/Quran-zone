@@ -17,9 +17,12 @@ app.use(
 app.use(cookieParser());
 export { app };
 
-
-
-
+// route import
+import authRoute from "./routes/auth.routes.js"
+import userRoute from "./routes/user.routes.js"
+// declare routes
+app.use("/api/v1/auth", authRoute)
+app.use("/api/v1", userRoute)
 app.all("*", (req, res, next) => {
   next(new ApiError(404, "Page not found"))
 })

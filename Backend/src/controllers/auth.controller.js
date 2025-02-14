@@ -2,6 +2,8 @@ import { wrapAsync } from "../utils/wrapAsync.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
+import { Student } from "../models/Student.model.js";
+import { Teacher } from "../models/teacher.model.js";
 import jwt from "jsonwebtoken"
 const generateAccessAndRefreshTokens = async (userId) => {
     try {
@@ -25,29 +27,47 @@ const generateAccessAndRefreshTokens = async (userId) => {
 }
 
 const registerUser = wrapAsync(async (req, res) => {
-    let { username, email, password, role } = req.params
+    let { username, email, password, role } = req.body
     if (!username || !email || !password || !role) {
         throw new ApiError(400, "All fields are required")
     }
 
-    const existedUser = await User.findOne({
-        username: username,
-        email: email
-    })
+    const existedUser = await User.findOne({ $or: [{ username }, { email }] })
 
     if (existedUser) {
         throw new ApiError(401, "username and email already exists")
     }
 
-    const user = await User.create({
+    const user = new User({
         username: username,
         email: email,
         password: password,
         role: role
     })
 
+    await user.save()
     if (!user) {
         throw new ApiError(500, "Something went wrong while registering the user")
+    }
+
+    let student;
+    let teacher;
+    if (user.role === "student") {
+        student = await Student.create({
+            user: user._id
+        })
+        if (!student) {
+            throw new ApiError(500, "Something went wrong while creating student")
+        }
+    }
+
+    if (user.role === "teacher") {
+        teacher = await Teacher.create({
+            user: user._id
+        })
+        if (!teacher) {
+            throw new ApiError(500, "Something went wrong while creating teacher")
+        }
     }
 
     const registeredUser = await User.findById(user._id).select("-password")
@@ -59,7 +79,7 @@ const registerUser = wrapAsync(async (req, res) => {
     res.status(200)
         .json(new ApiResponse(
             200,
-            registerUser,
+            registeredUser,
             "user created successfully"
         ))
 })
@@ -71,11 +91,7 @@ const loginUser = wrapAsync(async (req, res) => {
     if (!email || !password) {
         throw new ApiError(400, "All fields are required")
     }
-    let isValid = await User.isPasswordCorrect(password)
 
-    if (!isValid) {
-        throw new ApiError(400, "Incorrect Password")
-    }
     const user = await User.findOne({
         email: email
     })
@@ -84,7 +100,14 @@ const loginUser = wrapAsync(async (req, res) => {
         throw new ApiError(400, "User not found invalid credentials")
     }
 
-    let { accessToken, refreshToken } = generateAccessAndRefreshTokens(user._id)
+    let isValid = await user.isPasswordCorrect(password)
+
+    if (!isValid) {
+        throw new ApiError(400, "Incorrect Password")
+    }
+
+
+    let { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id)
 
     if (!accessToken || !refreshToken) {
         throw new ApiError(500, "Something went wrong while generating the tokens")
@@ -104,10 +127,12 @@ const loginUser = wrapAsync(async (req, res) => {
         .cookie("accessToken", accessToken, options)
         .json(new ApiResponse(
             200,
-            loggedInUser,
-            refreshToken,
-            accessToken,
-            "User logged in successfully"
+            "User logged in successfully",
+            {
+                user: loggedInUser,
+                refreshToken: refreshToken,
+                accessToken: accessToken,
+            }
         ))
 
 })
@@ -139,8 +164,8 @@ const logoutUser = wrapAsync(async (req, res) => {
         .json(
             new ApiResponse(
                 200,
+                "User loggedOut successfully",
                 loggedOutUser,
-                "User loggedOut successfully"
             )
         )
 
@@ -165,11 +190,11 @@ const refreshAccessToken = wrapAsync(async (req, res) => {
     if (!user) {
         throw new ApiError(400, "User not found invalid refreshToken")
     }
-    if (incomingRefreshToken == !user.refreshToken) {
+    if (incomingRefreshToken !== user.refreshToken) {
         throw new ApiError(400, "Invalid credentials")
     }
 
-    let { accessToken, refreshToken: newRefreshToken } = generateAccessAndRefreshTokens(user._id)
+    let { accessToken, refreshToken: newRefreshToken } = await generateAccessAndRefreshTokens(user._id)
 
     if (!accessToken || !newRefreshToken) {
         throw new ApiError(500, "Failed to refresh access Token")
@@ -185,11 +210,11 @@ const refreshAccessToken = wrapAsync(async (req, res) => {
         .json(
             new ApiResponse(
                 200,
+                "refresh Access Token successfully",
                 {
-                    accessToken,
-                    refreshToken: newRefreshToken
-                },
-                "refresh Access Token successfully"
+                    accessToken: accessToken,
+                    refreshToken: newRefreshToken,
+                }
 
             )
         )
