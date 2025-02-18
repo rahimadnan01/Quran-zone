@@ -20,9 +20,11 @@ export { app };
 // route import
 import authRoute from "./routes/auth.routes.js"
 import userRoute from "./routes/user.routes.js"
+import studentRoute from "./routes/Student.routes.js"
 // declare routes
 app.use("/api/v1/auth", authRoute)
 app.use("/api/v1", userRoute)
+app.use("/api/v1", studentRoute)
 app.all("*", (req, res, next) => {
   next(new ApiError(404, "Page not found"))
 })

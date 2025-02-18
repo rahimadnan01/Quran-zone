@@ -4,9 +4,10 @@ const studentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    EnrolledCourses: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course"
+    fee: {
+        type: String,
+        required: true,
+        default: 0
     },
     from: {
         type: String,
