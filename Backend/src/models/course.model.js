@@ -30,9 +30,12 @@ const courseSchema = new mongoose.Schema({
     },
     certificate: {
         type: String,
-        enum: ["No", "Yes"],
+        enum: ["yes", "no"],
 
     }
 
 
 }, { timestamps: true })
+
+const Course = mongoose.model("Course", courseSchema)
+export { Course }
