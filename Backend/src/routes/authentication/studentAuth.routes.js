@@ -1,0 +1,8 @@
+import Router from "express"
+import { loginStudent, logoutStudent, registerStudent } from "../../controllers/student.controller.js"
+const router = Router()
+router.route("/student/register").post(registerStudent)
+router.route("/student/login").post(loginStudent)
+router.route("/student/logout").post(logoutStudent)
+
+export default router

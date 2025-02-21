@@ -3,62 +3,139 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
 import { Student } from "../models/Student.model.js";
+import { generateAccessAndRefreshToken } from "../utils/tokens.js";
 import mongoose from "mongoose";
 
-const createStudent = wrapAsync(async (req, res) => {
-    let { fee, from, to } = req.body
-    let { userId } = req.params
-    if (req.user.role !== "admin") {
-        throw new ApiError(403, "Access Denied you can only modify your own data")
-    }
-    let ObjectId = new mongoose.Types.ObjectId(userId)
-    console.log(ObjectId)
-    if (!fee || !from || !to) {
-        throw new ApiError(400, "All fields are required")
+// register student
+const registerStudent = wrapAsync(async (req, res) => {
+    let { username, email, password } = req.body;
+    if ([username, email, password].some((field) => field?.trim()) === "") {
+        throw new ApiError(400, "Provide all fields");
     }
 
-    if (!userId) {
-        throw new ApiError(404, "Student may not found or invalid Id")
+    let existedUser = await User.findOne({
+        email: email,
+
+    });
+    if (existedUser) {
+        throw new ApiError(401, "User already exists");
     }
 
-    let user = await User.findById(userId)
-    if (!user) {
-        throw new ApiError(404, "User may not found")
-    }
+    let user = await User.create({
+        username: username,
+        email: email,
+        password: password,
+        role: "student",
+    });
 
+    let createdUser = await User.findById(user._id).select(
+        "-password -refreshToken",
+    );
 
-    if (!ObjectId) {
-        throw new ApiError(500, "Failed to generate objectId")
-    }
+    const student = await Student.create({
+        user: user._id
+    })
 
-    let student = await Student.findOneAndUpdate(
-        { user: ObjectId },
+    let createdStudent = await Student.findById(student._id).populate(
         {
-            $set: {
-                user: ObjectId,
-                fee: fee,
-                from: from,
-                to: to
-            }
-        },
-        {
-            new: true
+            path: "user",
+            select: "username email role"
         }
     )
-
-    if (!student) {
-        throw new ApiError(500, "Something went wrong while generating the Student")
+    if (!createdUser) {
+        throw new ApiError(500, "Something went wrong while registering a User");
     }
 
-    res.status(200)
+    if (!createdStudent) {
+        throw new ApiError(500, "Something went wrong while registering the user")
+    }
+    res
+        .status(200)
+        .json(new ApiResponse(200, "User registered successfully", createdStudent));
+});
+// login student
+const loginStudent = wrapAsync(async (req, res) => {
+    let { email, password } = req.body;
+
+    if (email == "" || password == "") {
+        throw new ApiError(400, "Both email and password are required");
+    }
+
+    let user = await User.findOne({ email });
+    if (!user) {
+        throw new ApiError(400, "User not found email not found");
+    }
+
+    if (user.role !== "student") {
+        throw new ApiError(403, "Access Denied only student can login on this page")
+    }
+
+    let validatePassword = await user.isPasswordCorrect(password);
+    if (!validatePassword) {
+        throw new ApiError(400, "Invalid Credentials");
+    }
+
+    let tokens = await generateAccessAndRefreshToken(user._id);
+
+    if (!tokens || !tokens.accessToken || !tokens.refreshToken) {
+        throw new ApiError(500, "Failed to generate tokens");
+    }
+    let { accessToken, refreshToken } = tokens;
+
+    let loggedInUser = await User.findById(user._id).select(
+        "-password -refreshToken",
+    );
+    if (!loggedInUser) {
+        throw new ApiError(500, "Failed to login");
+    }
+
+    let options = {
+        httpOnly: true,
+        secure: true,
+    };
+
+    res
+        .status(200)
+        .cookie("refreshToken", refreshToken, options)
+        .cookie("accessToken", accessToken, options)
         .json(
             new ApiResponse(
                 200,
-                "Student created successfully",
-                student
-            )
-        )
-})
+                "User loggedIn successfully",
+                {
+                    loggedInUser,
+                    accessToken,
+                    refreshToken,
+                }
+
+            ),
+        );
+});
+// logout student
+const logoutStudent = wrapAsync(async (req, res) => {
+    await User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $unset: {
+                refreshToken: 1,
+            },
+        },
+        {
+            new: true,
+        },
+    );
+
+    let options = {
+        httpOnly: true,
+        secure: true,
+    };
+
+    res
+        .status(200)
+        .clearCookie("refreshToken", options)
+        .clearCookie("accessToken", options)
+        .json(new ApiResponse(200, {}, "User log out successfully"));
+});
 const updateStudent = wrapAsync(async (req, res) => {
     let { fee, from, to } = req.body
     const { studentId } = req.params
@@ -95,31 +172,36 @@ const updateStudent = wrapAsync(async (req, res) => {
         )
 })
 const deleteStudent = wrapAsync(async (req, res) => {
-    let { userId, studentId } = req.params
+    let { studentId } = req.params
     if (req.user.role !== "admin") {
         throw new ApiError(403, "Access Denied you can only modify your own data")
     }
-    if (!userId || !studentId) {
+    if (!studentId) {
         throw new ApiError(404, "User may not found")
     }
+
+    let student = await Student.findById(studentId)
+    if (!student) {
+        throw new ApiError(404, "Student not found")
+    }
+
     const deletedStudent = await Student.findByIdAndDelete(studentId)
     if (!deletedStudent) {
         throw new ApiError(500, "Something went wrong while deleting the Student")
     }
 
-    const deletedUser = await User.findByIdAndDelete(userId)
+    const deletedUser = await User.findByIdAndDelete(student.user)
     if (!deletedUser) {
         throw new ApiError(500, "Something went wrong while deleting the User")
     }
 
     res.status(200)
         .json(
-            200,
-            "Student deleted successfully",
-            {
+            new ApiResponse(200,
+                "Student deleted successfully",
                 deletedStudent,
-                deletedUser
-            }
+                deletedUser)
+
         )
 })
 const getAllStudents = wrapAsync(async (req, res) => {
@@ -173,4 +255,4 @@ const getSingleStudent = wrapAsync(async (req, res) => {
             )
         )
 })
-export { createStudent, updateStudent, deleteStudent, getAllStudents, getSingleStudent }
+export { registerStudent, loginStudent, logoutStudent, updateStudent, deleteStudent, getAllStudents, getSingleStudent }
