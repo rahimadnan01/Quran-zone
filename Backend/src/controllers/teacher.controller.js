@@ -3,7 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
 import { Teacher } from "../models/teacher.model.js";
-
+import { generateAccessAndRefreshToken } from "../utils/tokens.js";
 // generate access and refresh token
 
 
