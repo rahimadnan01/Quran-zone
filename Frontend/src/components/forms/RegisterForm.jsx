@@ -97,7 +97,7 @@ function RegisterForm({ role }) {
             <div>
               <li className="text-slate-500 underline hover:text-slate-800 transition duration-100 hover:cursor-pointer list-none mb-8">
                 {" "}
-                <NavLink to="/login">Do not have an account? Signup</NavLink>
+                <NavLink to="/login">Have already registered,Login?</NavLink>
               </li>
             </div>
           </form>
