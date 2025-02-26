@@ -9,6 +9,7 @@ export default function ActionAlerts() {
     <Stack sx={{ width: "100%" }} spacing={2}>
       {open && (
         <Alert
+          className="!font-poppins"
           severity="success"
           onClose={() => {
             setOpen(false);

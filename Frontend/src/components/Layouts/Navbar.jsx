@@ -14,7 +14,7 @@ const Navbar = () => {
   return (
     <div
       ref={navRef}
-      className="w-full h-[6rem] bg-white shadow-lg fixed top-0 left-0 transition-all duration-500 "
+      className="w-full h-[6rem] bg-white shadow-lg fixed top-0 left-0 transition-all duration-500  z-10"
     >
       <nav className="w-full h-full  px-[3rem] flex justify-between items-center">
         <div className="flex gap-3 items-center w-[30%]">
