@@ -1,9 +1,10 @@
+import { Heading } from "lucide-react";
 import { steps } from "../index.js";
-export default function HowToApply() {
+export default function HowToApply({ heading, description }) {
   return (
-    <div className="relative w-full h-screen  bg-cover bg-center font-poppins">
+    <div className="relative w-full h-screen  bg-cover bg-center font-poppins mb-36">
       <section className="text-center py-12 px-6 max-w-5xl mx-auto font-poppins">
-        <h2 className="text-3xl font-bold mb-8">How to Apply</h2>
+        <h2 className="text-3xl font-bold mb-8">{heading}</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 my-[5rem]">
           {steps.map((step) => (
             <div
@@ -22,9 +23,7 @@ export default function HowToApply() {
           ))}
         </div>
         <p className="mt-8 text-lg text-gray-700 max-w-3xl mx-auto">
-          Our platform is not just an ordinary Quran academy – it is a place
-          where you can learn Al Quran online, improve your Quranic Qaida, and
-          engage with our Islamic website for further studies.
+          {description}
         </p>
       </section>
     </div>

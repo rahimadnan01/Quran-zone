@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 const LoginForm = ({ role }) => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -20,6 +22,10 @@ const LoginForm = ({ role }) => {
         { withCredentials: true }
       );
       console.log("form submitted successfully", response.data);
+      if (response.status >= 200 && response.status < 300) {
+        alert(`${role} logged in successfully`);
+        navigate("/");
+      }
       reset();
     } catch (error) {
       console.log("failed to send data");
@@ -55,6 +61,7 @@ const LoginForm = ({ role }) => {
                 Password
               </label>
               <input
+                type="password"
                 id="password"
                 className="w-full  h-[3rem] border-2 border-gray-300 outline-gray-400 font-poppins rounded-md focus:outline-2 focus:outline-blue-500 transition duration-200"
                 {...register("password", {

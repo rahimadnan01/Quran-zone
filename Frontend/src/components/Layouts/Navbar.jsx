@@ -36,7 +36,7 @@ const Navbar = () => {
         </div>
         <div className="w-[30%] flex items-center gap-5">
           <a
-            href="https://wa.me/+923035906622" // Replace 'your_number' with your WhatsApp number
+            href="https://wa.me/+923126361186" // Replace 'your_number' with your WhatsApp number
             target="_blank"
             rel="noopener noreferrer"
             className="flex font-poppins items-center gap-2 bg-green-500 text-white px-2 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 "

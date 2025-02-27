@@ -26,6 +26,7 @@ import studentRoute from "./routes/Student.routes.js"
 import teacherRoute from "./routes/teacher.routes.js"
 import adminRoute from "./routes/admin.routes.js"
 import courseRoute from "./routes/course.routes.js"
+import emailRoute from "./routes/email.routes.js"
 // declare routes
 app.use("/api/v1", adminAuthRoute)
 app.use("/api/v1", studentAuthRoute)
@@ -35,6 +36,7 @@ app.use("/api/v1", studentRoute)
 app.use("/api/v1", teacherRoute)
 app.use("/api/v1", adminRoute)
 app.use("/api/v1", courseRoute)
+app.use("/api/v1", emailRoute)
 app.all("*", (req, res, next) => {
   next(new ApiError(404, "Page not found"))
 })

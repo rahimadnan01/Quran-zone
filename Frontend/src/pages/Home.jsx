@@ -18,7 +18,12 @@ const Home = () => {
       <MissionSection />
       <ImageGrid />
       <WhyChooseUs />
-      <HowToApply />
+      <HowToApply
+        heading={"How To Apply"}
+        description={
+          "Our platform is not just an ordinary Quran academy—it is a place where you can learn Al Quran online, improve your Quranic Qaida, and even engage with our islami website for further Islamic studies. We offer structured programs in Quran and Tajweed, designed for those looking to strengthen their Quran recitation and deepen their knowledge of the Quranic study."
+        }
+      />
       <FAQSection />
       <Footer />
     </div>
