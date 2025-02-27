@@ -9,8 +9,9 @@ const transporter = nodemailer.createTransport({
         pass: process.env.Password,
     },
     tls: {
-        rejectUnauthorized: false, // Allow self-signed certs
+        rejectUnauthorized: false, 
     },
-    connectionTimeout: 10000, // 10 seconds timeout
+    connectionTimeout: 10000, 
+    socketTimeout: 10000,
 });
 export { transporter }

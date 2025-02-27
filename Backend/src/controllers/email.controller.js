@@ -13,7 +13,8 @@ const sendEmail = wrapAsync(async (req, res) => {
         from: email,
         to: process.env.Email,
         subject: name,
-        text: message
+        text: message,
+        replyTo: email
     }
 
     try {

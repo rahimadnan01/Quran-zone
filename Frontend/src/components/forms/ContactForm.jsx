@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { image8 } from "../../assets";
+import axios from "axios";
 
 export default function ContactForm() {
   const {
@@ -9,8 +10,21 @@ export default function ContactForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+    
+      const response = await axios.post(
+        `http://localhost:3000/api/v1/send-email`,
+        data
+      );
+      console.log("form submitted successfully", response.data);
+      if (response.status >= 200 && response.status < 300) {
+        alert(`email sent successfully`);
+      }
+      reset();
+    } catch (error) {
+      console.log("failed to send data");
+    }
   };
 
   return (
@@ -53,15 +67,6 @@ export default function ContactForm() {
               />
               {errors.email && (
                 <p className="text-red-500 text-sm">{errors.email.message}</p>
-              )}
-
-              <input
-                {...register("subject", { required: "Subject is required" })}
-                placeholder="Your Subject"
-                className="w-full p-2 border rounded"
-              />
-              {errors.subject && (
-                <p className="text-red-500 text-sm">{errors.subject.message}</p>
               )}
 
               <textarea
