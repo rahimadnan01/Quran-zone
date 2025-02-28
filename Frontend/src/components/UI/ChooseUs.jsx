@@ -1,5 +1,5 @@
 import { image5, schoolPng } from "../../assets";
-
+import { NavLink } from "react-router-dom";
 export default function WhyChooseUs() {
   return (
     <div className="relative w-full h-screen  bg-cover bg-center font-poppins mb-[3rem]">
@@ -50,9 +50,11 @@ export default function WhyChooseUs() {
               <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out w-12 h-12 bg-blue-600 rounded-full group-hover:w-60 group-hover:h-12 group-hover:rounded-md"></div>
 
               {/* Button Text */}
-              <span className="relative text-[1.2rem] z-9 text-black  px-4 py-2 mt-5 hover:text-white transition duration-150 ease-in">
-                Schedule A Tour <i class="fa-solid fa-arrow-right"></i>
-              </span>
+              <NavLink to={"/contact"}>
+                <span className="relative text-[1.2rem] z-9 text-black  px-4 py-2 mt-5 hover:text-white transition duration-150 ease-in">
+                  Schedule A Tour <i class="fa-solid fa-arrow-right"></i>
+                </span>
+              </NavLink>
             </div>
           </div>
         </div>

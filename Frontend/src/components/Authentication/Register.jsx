@@ -3,7 +3,7 @@ import { authImage, authLogo } from "../../assets";
 import RegisterForm from "../forms/RegisterForm";
 import ColorToggleButton from "../MaterialUi/Toggle";
 function Register() {
-  const [role, setRole] = useState();
+  const [role, setRole] = useState("student");
   return (
     <div
       className="min-h-screen w-full  bg-center bg-cover bg-no-repeat"

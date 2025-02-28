@@ -1,8 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 function RegisterForm({ role }) {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -12,14 +13,17 @@ function RegisterForm({ role }) {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(role);
     try {
+      console.log(role);
       const response = await axios.post(
         `http://localhost:3000/api/v1/${role}/register`,
         data,
         { withCredentials: true }
       );
-      console.log("form submitted successfully", response.data);
+      if (response.status >= 200 && response.status < 300) {
+        console.log("form submitted successfully", response.data);
+        navigate("/login");
+      }
       reset();
     } catch (error) {
       console.log("failed to send data");
@@ -44,6 +48,7 @@ function RegisterForm({ role }) {
               </label>
               <input
                 id="username"
+                autoComplete="false"
                 className="w-full  h-[3rem] border-2 border-gray-300 outline-gray-400 font-poppins rounded-md focus:outline-2 focus:outline-blue-500 transition duration-300 ease-in-out"
                 {...register("username", { required: true })}
               />
@@ -57,6 +62,7 @@ function RegisterForm({ role }) {
               </label>
               <input
                 id="email"
+                autoComplete="false"
                 className="w-full  h-[3rem] border-2 border-gray-300 outline-gray-400 font-poppins rounded-md focus:outline-2 focus:outline-blue-500 transition duration-200"
                 {...register("email", { required: true })}
               />
@@ -70,6 +76,8 @@ function RegisterForm({ role }) {
               </label>
               <input
                 id="password"
+                autoComplete="false"
+                type="password"
                 className="w-full  h-[3rem] border-2 border-gray-300 outline-gray-400 font-poppins rounded-md focus:outline-2 focus:outline-blue-500 transition duration-200"
                 {...register("password", {
                   required: {

@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { hero } from "../../assets/index.js";
 export default function HeroSection() {
   return (
@@ -20,12 +21,16 @@ export default function HeroSection() {
 
         {/* Buttons */}
         <div className="mt-6 flex space-x-4">
-          <button className="px-6 py-3 bg-white text-black font-semibold rounded-lg shadow-lg shadow-white transition duration-300 hover:bg-blue-600 hover:text-white hover:shadow-xl">
-            View Our Program
-          </button>
-          <button className="px-6 py-3 border border-white text-white font-semibold rounded-lg transition duration-300 hover:bg-blue-600 hover:text-white">
-            Contact Us
-          </button>
+          <NavLink to={"/courses"}>
+            <button className="px-6 py-3 bg-white text-black font-semibold rounded-lg shadow-lg shadow-white transition duration-300 hover:bg-blue-600 hover:text-white hover:shadow-xl">
+              View Our Program
+            </button>
+          </NavLink>
+          <NavLink to={"/contact"}>
+            <button className="px-6 py-3 border border-white text-white font-semibold rounded-lg transition duration-300 hover:bg-blue-600 hover:text-white">
+              Contact Us
+            </button>
+          </NavLink>
         </div>
       </div>
     </div>
