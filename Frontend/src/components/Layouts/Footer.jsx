@@ -1,6 +1,6 @@
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { mainLogo } from "../../assets";
-
+import { NavLink } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="bg-white py-10 px-6 md:px-20 flex flex-col md:flex-row justify-between items-start md:items-center border-t font-poppins">
@@ -27,7 +27,9 @@ const Footer = () => {
           </a>
         </div>
         <button className="px-6 py-2 bg-gradient-to-r from-purple-400 to-blue-500 text-white rounded-full shadow-lg flex items-center transition-all duration-300 hover:shadow-xl">
-          Contact With Us <span className="ml-2">→</span>
+          <NavLink to={"/contact"}>
+            Contact With Us <span className="ml-2">→</span>
+          </NavLink>
         </button>
       </div>
 
@@ -41,7 +43,7 @@ const Footer = () => {
               href="#"
               className="relative hover:text-blue-600 transition-colors duration-300 after:block after:content-[''] after:h-0.5 after:w-1/2 after:bg-blue-600 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
             >
-              Contact us
+              <NavLink to={"/contact"}>Contact us</NavLink>
             </a>
           </li>
           <li>
@@ -49,7 +51,7 @@ const Footer = () => {
               href="#"
               className="relative hover:text-blue-600 transition-colors duration-300 after:block after:content-[''] after:h-0.5 after:w-1/2 after:bg-blue-600 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
             >
-              Become Teacher
+              <NavLink to={"/contact"}>Become Teacher</NavLink>
             </a>
           </li>
           <li>
@@ -57,7 +59,7 @@ const Footer = () => {
               href="#"
               className="relative hover:text-blue-600 transition-colors duration-300 after:block after:content-[''] after:h-0.5 after:w-1/2 after:bg-blue-600 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
             >
-              About Quranic Nexus
+              <NavLink to={"/aboutUs"}>About Quran Zone</NavLink>
             </a>
           </li>
           <li>
@@ -65,7 +67,7 @@ const Footer = () => {
               href="#"
               className="relative hover:text-blue-600 transition-colors duration-300 after:block after:content-[''] after:h-0.5 after:w-1/2 after:bg-blue-600 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
             >
-              Course
+              <NavLink to={"/courses"}>Course</NavLink>
             </a>
           </li>
           <li>
@@ -73,7 +75,7 @@ const Footer = () => {
               href="#"
               className="relative hover:text-blue-600 transition-colors duration-300 after:block after:content-[''] after:h-0.5 after:w-1/2 after:bg-blue-600 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
             >
-              Have a query for us
+              <NavLink to={"/contact"}>Have a query for us</NavLink>
             </a>
           </li>
         </ul>

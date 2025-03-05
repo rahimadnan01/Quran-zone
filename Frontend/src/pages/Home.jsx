@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Layouts/Navbar";
 import HeroSection from "../components/UI/Hero";
 import CustomSection from "../components/UI/CustomSection";

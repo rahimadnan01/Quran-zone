@@ -23,24 +23,28 @@ const steps = [
         title: "Pick a Course",
         description: "Browse our catalogue of diverse courses and pick one",
         icon: "💡",
+        to: "/courses"
     },
     {
         id: 2,
         title: "Pay Dues",
         description: "Make dues payment in the mentioned bank account and send us a receipt",
         icon: "🎓",
+        to: "/courses"
     },
     {
         id: 3,
         title: "Get Enrolled",
         description: "Our Admins will call you and confirm your admissions and enroll you in your class",
         icon: "🆔",
+        to: "/courses"
     },
     {
         id: 4,
         title: "Start Learning",
         description: "You will be notified in your dashboard and also via email to attend your online class",
         icon: "🏅",
+        to: "/courses"
     },
 ];
 const faqs = [

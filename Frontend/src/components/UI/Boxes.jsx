@@ -1,5 +1,6 @@
 import { Heading } from "lucide-react";
 import { steps } from "../index.js";
+import { NavLink } from "react-router-dom";
 export default function HowToApply({ heading, description }) {
   return (
     <div className="relative w-full h-screen  bg-cover bg-center font-poppins mb-36">
@@ -13,7 +14,7 @@ export default function HowToApply({ heading, description }) {
             >
               <span className="text-4xl block mb-4">{step.icon}</span>
               <h3 className="text-xl font-semibold mb-2 hover:text-[#2f57ef] transition duration-100 ease-in">
-                {step.title}
+                <NavLink to={step.to}>{step.title}</NavLink>
               </h3>
               <p className="text-gray-600 text-lg">{step.description}</p>
               <span className="absolute top-4 right-4 text-gray-200 text-6xl font-bold">

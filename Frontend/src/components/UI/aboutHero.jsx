@@ -49,7 +49,7 @@ const ChangingTextSection = () => {
             </button>
           </NavLink>
           <button className="border border-gray-300 px-6 py-3 rounded-lg shadow-lg font-medium hover:bg-slate-900 hover:text-white transition duration-150 ease-in">
-            Contact US →
+            <NavLink to={"/contact"}>Contact US →</NavLink>
           </button>
         </div>
       </section>

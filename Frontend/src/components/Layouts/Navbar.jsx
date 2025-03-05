@@ -4,8 +4,10 @@ import { navLinks } from "../index.js";
 import { NavLink } from "react-router-dom";
 import { navAnimation } from "../animations/animation.js";
 import ActionAlerts from "../MaterialUi/Alert.jsx";
+import { useAuth } from "../Authentication/Auth.jsx";
 
 const Navbar = () => {
+  const { isLogin } = useAuth();
   const navRef = useRef(null);
   useEffect(() => {
     if (!navRef.current) return;
@@ -47,12 +49,16 @@ const Navbar = () => {
             ></i>
             WhatsApp
           </a>
-          <NavLink
-            to="/login"
-            className="px-6 py-2 rounded-lg bg-blue-500 text-white font-medium transition duration-300 hover:bg-white hover:text-blue-500 border border-blue-500"
-          >
-            Login/Register
-          </NavLink>
+          {isLogin ? (
+            <button>logout</button>
+          ) : (
+            <NavLink
+              to="/login"
+              className="px-6 py-2 rounded-lg bg-blue-500 text-white font-medium transition duration-300 hover:bg-white hover:text-blue-500 border border-blue-500"
+            >
+              Login/Register
+            </NavLink>
+          )}
         </div>
       </nav>
       <ActionAlerts />
