@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../Authentication/Auth";
+import { useAuth } from "../../context/Auth";
 import axios from "axios";
 
 const LoginForm = ({ role }) => {
@@ -22,8 +22,11 @@ const LoginForm = ({ role }) => {
         data,
         { withCredentials: true }
       );
-      login(response.data);
-      console.log("form submitted successfully", response.data);
+      login(response.data.data.loggedInUser);
+      console.log(
+        "form submitted successfully",
+        response.data.data.loggedInUser
+      );
       if (response.status >= 200 && response.status < 300) {
         alert(`${role} logged in successfully`);
         navigate("/");

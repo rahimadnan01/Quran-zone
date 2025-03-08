@@ -4,7 +4,8 @@ import { navLinks } from "../index.js";
 import { NavLink } from "react-router-dom";
 import { navAnimation } from "../animations/animation.js";
 import ActionAlerts from "../MaterialUi/Alert.jsx";
-import { useAuth } from "../Authentication/Auth.jsx";
+import { useAuth } from "../../context/Auth.jsx";
+import UserProfileMenu from "./UserProfile.jsx";
 
 const Navbar = () => {
   const { isLogin } = useAuth();
@@ -50,7 +51,7 @@ const Navbar = () => {
             WhatsApp
           </a>
           {isLogin ? (
-            <button>logout</button>
+            <UserProfileMenu></UserProfileMenu>
           ) : (
             <NavLink
               to="/login"
