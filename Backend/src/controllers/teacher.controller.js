@@ -115,31 +115,8 @@ const loginTeacher = wrapAsync(async (req, res) => {
         );
 });
 
-// logout student
-const logoutTeacher = wrapAsync(async (req, res) => {
-    await User.findByIdAndUpdate(
-        req.user?._id,
-        {
-            $unset: {
-                refreshToken: 1,
-            },
-        },
-        {
-            new: true,
-        },
-    );
 
-    let options = {
-        httpOnly: true,
-        secure: true,
-    };
 
-    res
-        .status(200)
-        .clearCookie("refreshToken", options)
-        .clearCookie("accessToken", options)
-        .json(new ApiResponse(200, {}, "User log out successfully"));
-});
 
 
 
@@ -266,4 +243,4 @@ const getSingleTeacher = wrapAsync(async (req, res) => {
         )
 })
 
-export { registerTeacher, loginTeacher, logoutTeacher, updateTeacher, deleteTeacher, getAllTeachers, getSingleTeacher }
+export { registerTeacher, loginTeacher,  updateTeacher, deleteTeacher, getAllTeachers, getSingleTeacher }

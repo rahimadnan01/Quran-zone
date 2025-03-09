@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Button, Avatar } from "@mui/material";
 import { useAuth } from "../../context/Auth.jsx";
-
+import axios from "axios";
 const UserProfile = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const { user } = useAuth();
-
+  const { user, logout } = useAuth();
+  const logoutUser = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/api/v1/users/logout`
+      );
+      logout();
+      console.log("User logged out successfully", response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
     <div
       className="font-poppins"
@@ -45,6 +55,7 @@ const UserProfile = () => {
             fullWidth
             className="cursor-pointer"
             style={{ marginTop: 10 }}
+            onClick={logoutUser}
           >
             Log Out
           </Button>

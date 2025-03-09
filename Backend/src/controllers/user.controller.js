@@ -191,5 +191,30 @@ const getUser = wrapAsync(async (req, res) => {
         )
 })
 
-export { createUser, updateUser, deleteUser, showUsers, getUser }
+const logoutUser = wrapAsync(async (req, res) => {
+    await User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $unset: {
+                refreshToken: 1,
+            },
+        },
+        {
+            new: true,
+        },
+    );
+
+    let options = {
+        httpOnly: true,
+        secure: true,
+    };
+
+    res
+        .status(200)
+        .clearCookie("refreshToken", options)
+        .clearCookie("accessToken", options)
+        .json(new ApiResponse(200, {}, "User log out successfully"));
+});
+
+export { createUser, updateUser, deleteUser, showUsers, getUser, logoutUser }
 

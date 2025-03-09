@@ -114,30 +114,7 @@ const loginAdmin = wrapAsync(async (req, res) => {
 
 
 
-const logoutAdmin = wrapAsync(async (req, res) => {
-    await User.findByIdAndUpdate(
-        req.user?._id,
-        {
-            $unset: {
-                refreshToken: 1,
-            },
-        },
-        {
-            new: true,
-        },
-    );
 
-    let options = {
-        httpOnly: true,
-        secure: true,
-    };
-
-    res
-        .status(200)
-        .clearCookie("refreshToken", options)
-        .clearCookie("accessToken", options)
-        .json(new ApiResponse(200, {}, "User log out successfully"));
-});
 
 
 const updateAdmin = wrapAsync(async (req, res) => {
@@ -209,4 +186,4 @@ const deleteAdmin = wrapAsync(async (req, res) => {
 
 })
 
-export { registerAdmin, loginAdmin, logoutAdmin, updateAdmin, deleteAdmin }
+export { registerAdmin, loginAdmin,  updateAdmin, deleteAdmin }
