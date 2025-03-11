@@ -4,9 +4,9 @@ import {
   courseButtonReverse,
   courseCardAnimation,
 } from "../animations/animation";
+import { NavLink } from "react-router-dom";
 
 export default function CourseCard({ data }) {
-  console.log(data);
   const buttonRef = useRef(null);
   const courseCardRef = useRef(null);
 
@@ -48,7 +48,7 @@ export default function CourseCard({ data }) {
             className="absolute opacity-0 bottom-0 left-0 w-full flex justify-center"
           >
             <button className=" bg-purple-600 text-white font-medium px-5 py-2 rounded-full shadow-lg">
-              Read More →
+              <NavLink to={`/courses/${course._id}`}>Read More →</NavLink>
             </button>
           </div>
         </div>

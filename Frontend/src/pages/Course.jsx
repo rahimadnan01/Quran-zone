@@ -6,7 +6,6 @@ import Footer from "../components/Layouts/Footer";
 import useFetch from "../hooks/useFetch";
 const Course = () => {
   let { data } = useFetch("http://localhost:3000/api/v1/courses", "GET");
-  console.log(data);
   return (
     <div className="min-h-screen w-full flex flex-col">
       <Navbar />

@@ -7,6 +7,7 @@ import Home from "./pages/Home.jsx";
 import Course from "./pages/Course.jsx";
 import AboutUs from "./pages/AboutUs.jsx";
 import Contact from "./pages/Contact.jsx";
+import CourseDetail from "./pages/CourseDetail.jsx";
 const router = createBrowserRouter([
   {
     path: "/register",
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/contact",
     element: <Contact />,
+  },
+  {
+    path: "/courses/:courseId",
+    element: <CourseDetail />,
   },
 ]);
 
