@@ -202,7 +202,7 @@ const CourseDetailPage = ({ course }) => {
                 className="w-20 h-20 rounded-full"
               />
               <div>
-                <h3 className="text-lg font-bold">Team QuranicNexus.com</h3>
+                <h3 className="text-lg font-bold">Team QuranZone.com</h3>
                 <p className="text-gray-600 text-sm">Advanced Educator</p>
                 <p className="text-sm text-yellow-500">
                   ⭐⭐⭐⭐⭐ 4.8 Rating | 500+ Students
@@ -210,7 +210,7 @@ const CourseDetailPage = ({ course }) => {
               </div>
             </div>
             <p className="text-gray-700 mt-3">
-              Quranic Nexus Institute consists of expert and dedicated
+              Quran Zone Institute consists of expert and dedicated
               individuals that will provide Quranic education for you.
             </p>
           </div>

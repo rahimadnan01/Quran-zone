@@ -17,7 +17,7 @@ const CourseDetailHero = ({ course }) => {
           </div>
           <h1 className="text-2xl font-bold">Nazra Quran with Tajweed</h1>
           <p className="text-sm opacity-90">
-            By Quranic Nexus Team in Understanding Quran
+            By Quran Zone Team in Understanding Quran
           </p>
           <div className="text-xs mt-2 opacity-75">
             Last updated 1 month ago • English/Urdu • Certified Course
@@ -34,7 +34,7 @@ const CourseDetailHero = ({ course }) => {
           <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white">
             <h2 className="text-3xl font-bold">NAZRA QUR'AN</h2>
             <p className="text-lg">WITH TAJWEED</p>
-            <p className="text-sm mt-1 opacity-80">By Quranic Nexus</p>
+            <p className="text-sm mt-1 opacity-80">By Quran zone</p>
           </div>
         </div>
       </div>
