@@ -18,7 +18,7 @@ const LoginForm = ({ role }) => {
     try {
       console.log(role);
       const response = await axios.post(
-        `http://localhost:3000/api/v1/${role}/login`,
+        `https://quran-zone.onrender.com/api/v1/${role}/login`,
         data,
         { withCredentials: true }
       );

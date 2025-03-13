@@ -1,5 +1,5 @@
 import React from "react";
-import CourseDetailHero from "../components/UI/courseDetailHero.jsx";
+import CourseDetailHero from "../components/UI/CourseDetailHero.jsx";
 import Navbar from "../components/Layouts/Navbar.jsx";
 import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch.js";
