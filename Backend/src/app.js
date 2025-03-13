@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://shiny-muffin-b81bb5.netlify.app"],
   })
 );
 app.use(cookieParser());
