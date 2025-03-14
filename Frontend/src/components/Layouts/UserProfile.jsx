@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Card, Button, Avatar } from "@mui/material";
 import { useAuth } from "../../context/Auth.jsx";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
+import { User } from "lucide-react";
+import DashboardCourses from "../UI/DashboardCourses.jsx";
 const UserProfile = () => {
   const [isHovered, setIsHovered] = useState(false);
   const { user, logout } = useAuth();
@@ -43,12 +46,25 @@ const UserProfile = () => {
         >
           <Avatar style={{ width: 50, height: 50, marginBottom: 10 }} />
           <h4>{user.username}</h4>
-          <p style={{ color: "blue", cursor: "pointer" }}>View Profile</p>
+          <NavLink to={"/dashboard"}>
+            <p style={{ color: "blue", cursor: "pointer" }}>View Profile</p>
+          </NavLink>
           <hr />
-          <p className="cursor-pointer">🏠 My Dashboard</p>
-          <p className="cursor-pointer">📚 Enrolled Courses</p>
-          <p className="cursor-pointer">📅 Classes</p>
-          <p className="cursor-pointer">🛒 Order History</p>
+          <NavLink to={"/dashboard"}>
+            <p className="cursor-pointer">🏠 My Dashboard</p>
+          </NavLink>
+          <NavLink to={"/User-courses"}>
+            <p className="cursor-pointer">📚 Enrolled Courses</p>
+          </NavLink>
+          <NavLink to={"/User-classes"}>
+            <p className="cursor-pointer">📅 Classes</p>
+          </NavLink>
+          <NavLink to={"/User-account"}>
+            <p className="cursor-pointer flex">
+              <User className="w-6 h-6 text-gray-600" />
+              Account details
+            </p>
+          </NavLink>
           <Button
             variant="contained"
             color="error"
