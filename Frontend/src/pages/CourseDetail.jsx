@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CourseDetailHero from "../components/UI/CourseDetailHero.jsx";
 import Navbar from "../components/Layouts/Navbar.jsx";
 import { useParams } from "react-router-dom";
@@ -13,6 +13,7 @@ const CourseDetail = () => {
     `http://localhost:3000/api/v1/courses/${courseId}`,
     "GET"
   );
+
   if (loading || !data) {
     return <div className="text-center text-white">Loading...</div>;
   }
@@ -20,7 +21,7 @@ const CourseDetail = () => {
     <div>
       <Navbar />
       <CourseDetailHero course={data || ""} />
-      <CourseDetailPage course={data || ""} />
+      <CourseDetailPage course={data || ""} courseId={courseId} />
       <Footer />
     </div>
   );

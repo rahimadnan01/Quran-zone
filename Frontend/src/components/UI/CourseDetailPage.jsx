@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-const CourseDetailPage = ({ course }) => {
+import axios from "axios";
+const CourseDetailPage = ({ course, courseId }) => {
   const [showMore, setShowMore] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
   if (!course || !course.thumbnail) {
     return <div className="text-center text-white">Loading...</div>;
   }
-  console.log(course);
+  console.log(courseId);
+  const addCourse = async () => {
+    try {
+      const response = await axios.post(
+        `https://quran-zone.onrender.com/api/v1/enrollCourses/${courseId}`
+      );
+      console.log(response);
+    } catch (error) {
+      console.error("Error adding course:", error);
+    }
+  };
 
   return (
     <div className="flex flex-col md:flex-row p-6 font-poppins mb-10">
@@ -16,7 +27,10 @@ const CourseDetailPage = ({ course }) => {
           $40 <span className="line-through text-gray-500">$55</span>
         </h2>
         <p className="text-red-500 text-sm">🔥 3 days left</p>
-        <button className="w-full bg-purple-600 text-white font-bold py-3 my-2 rounded-lg">
+        <button
+          onClick={addCourse}
+          className="w-full bg-purple-600 text-white font-bold py-3 my-2 rounded-lg"
+        >
           Enroll Now →
         </button>
         <button className="w-full bg-gray-200 text-black font-medium py-3 rounded-lg">
@@ -82,7 +96,7 @@ const CourseDetailPage = ({ course }) => {
             <p className="text-gray-700">
               <strong>"Nazra"</strong> is a fundamental Islamic education course
               designed to teach students how to read the Quran with proper
-              pronunciation and articulation. It focuses on the recitation of
+              pronunciation and articulation. It focuses on the recitation /of
               the Arabic text of the Quran without delving deeply into its
               meanings or interpretations. Read Al-Quran courses typically cater
               to beginners and individuals who wish to establish a strong
@@ -210,8 +224,8 @@ const CourseDetailPage = ({ course }) => {
               </div>
             </div>
             <p className="text-gray-700 mt-3">
-              Quran Zone Institute consists of expert and dedicated
-              individuals that will provide Quranic education for you.
+              Quran Zone Institute consists of expert and dedicated individuals
+              that will provide Quranic education for you.
             </p>
           </div>
         )}

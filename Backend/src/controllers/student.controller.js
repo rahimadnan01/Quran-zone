@@ -232,4 +232,31 @@ const getSingleStudent = wrapAsync(async (req, res) => {
             )
         )
 })
-export { registerStudent, loginStudent, updateStudent, deleteStudent, getAllStudents, getSingleStudent }
+const enrollCourses = wrapAsync(async (req, res) => {
+    const courseId = req.params.courseId
+    if (!courseId) {
+        throw new ApiError(401, "Course ID is not defined")
+    }
+    const user = await User.findById(req.user._id)
+    if (!user) {
+        throw new ApiError(402, "User not defined")
+    }
+    const student = await Student.findOne({ user: user._id })
+    if (courseId) student.enrolledCourses = courseId
+
+
+    if (!student) {
+        throw new ApiError(500, "Something went wrong while finding the student")
+    }
+
+
+    res.status(200)
+        .json(
+            new ApiResponse(
+                200,
+                student,
+                "Course added successfully"
+            )
+        )
+})
+export { registerStudent, loginStudent, updateStudent, deleteStudent, getAllStudents, getSingleStudent, enrollCourses }
