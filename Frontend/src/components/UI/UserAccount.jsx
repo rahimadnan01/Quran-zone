@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
 import Navbar from "../Layouts/Navbar";
 import Footer from "../Layouts/Footer";
+import { useAuth } from "../../context/Auth";
 
 export default function AccountDetailsForm() {
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
@@ -23,6 +25,7 @@ export default function AccountDetailsForm() {
           <input
             type="text"
             placeholder="Name"
+            value={user.username}
             {...register("name", { required: "Name is required" })}
             className="w-full p-2 border rounded-md"
           />
