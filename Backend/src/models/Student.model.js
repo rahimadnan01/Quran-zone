@@ -16,10 +16,12 @@ const studentSchema = new mongoose.Schema({
     to: {
         type: String
     },
-    enrolledCourses: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course"
-    }
+    enrolledCourses: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Course"
+        }
+    ]
 
 }, { timestamps: true })
 

@@ -7,10 +7,11 @@ const verifyJwt = (role) => wrapAsync(async (req, res, next) => {
   try {
     const token =
       req.cookies?.accessToken ||
-      req.header("Authorization").replace("Bearer", "");
+      req.header("Authorization")?.replace("Bearer ", "");
+
 
     if (!token) {
-      throw new ApiError(400, "Unauthorized User token not found");
+      throw new ApiError(401, "Unauthorized User token not found");
     }
 
     let decodedToken = jwt.verify(token, process.env.ACCESS_SECRET_KEY);
