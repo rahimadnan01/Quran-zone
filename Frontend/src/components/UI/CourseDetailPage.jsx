@@ -1,23 +1,13 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { useAuth } from "../../context/Auth";
 const CourseDetailPage = ({ course, courseId }) => {
   const [showMore, setShowMore] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
   if (!course || !course.thumbnail) {
     return <div className="text-center text-white">Loading...</div>;
   }
-  console.log(courseId);
-  const addCourse = async () => {
-    try {
-      const response = await axios.post(
-        `https://quran-zone.onrender.com/api/v1/enrollCourses/${courseId}`
-      );
-      console.log(response);
-    } catch (error) {
-      console.error("Error adding course:", error);
-    }
-  };
 
   return (
     <div className="flex flex-col md:flex-row p-6 font-poppins mb-10">
@@ -27,15 +17,12 @@ const CourseDetailPage = ({ course, courseId }) => {
           $40 <span className="line-through text-gray-500">$55</span>
         </h2>
         <p className="text-red-500 text-sm">🔥 3 days left</p>
-        <button
-          onClick={addCourse}
-          className="w-full bg-purple-600 text-white font-bold py-3 my-2 rounded-lg"
-        >
-          Enroll Now →
-        </button>
-        <button className="w-full bg-gray-200 text-black font-medium py-3 rounded-lg">
-          Preview this course
-        </button>
+
+        <a href="https://www.youtube.com/watch?v=28o5zo3cafg">
+          <button className="w-full bg-gray-200 text-black font-medium py-3 rounded-lg">
+            Preview this course
+          </button>
+        </a>
 
         <div className="mt-4 space-y-2 text-gray-700 text-sm">
           <p>
@@ -58,9 +45,11 @@ const CourseDetailPage = ({ course, courseId }) => {
         <div className="mt-6">
           <p className="text-sm">For details about the course:</p>
           <p className="font-semibold">📞 Call Us: +92 312 6361186</p>
-          <button className="w-full bg-green-500 text-white py-3 rounded-lg mt-2">
-            Contact on WhatsApp
-          </button>
+          <a href="https://wa.me/923035906622?text=Hello!%20I'm%20interested%20in%20the%20Quran%20course.">
+            <button className="w-full bg-green-500 text-white py-3 rounded-lg mt-2">
+              Contact on WhatsApp
+            </button>
+          </a>
         </div>
       </div>
 
@@ -187,13 +176,15 @@ const CourseDetailPage = ({ course, courseId }) => {
                       accuracy, and comprehension.”
                     </motion.p>
 
-                    <motion.button
-                      className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Join Now
-                    </motion.button>
+                    <a href="https://wa.me/923035906622?text=Hello!%20I'm%20interested%20in%20the%20Quran%20course.">
+                      <motion.button
+                        className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        Join Now
+                      </motion.button>
+                    </a>
                   </div>
                 </>
               )}

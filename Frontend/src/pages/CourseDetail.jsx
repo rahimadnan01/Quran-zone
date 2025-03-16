@@ -10,9 +10,11 @@ const CourseDetail = () => {
   const { courseId } = useParams();
   console.log(courseId);
   const { data, loading } = useFetch(
-    `http://localhost:3000/api/v1/courses/${courseId}`,
+    `https://quran-zone.onrender.com/api/v1/courses/${courseId}`,
     "GET"
   );
+
+  
 
   if (loading || !data) {
     return <div className="text-center text-white">Loading...</div>;

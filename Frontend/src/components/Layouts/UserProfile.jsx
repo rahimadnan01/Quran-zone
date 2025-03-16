@@ -53,12 +53,7 @@ const UserProfile = () => {
           <NavLink to={"/dashboard"}>
             <p className="cursor-pointer">🏠 My Dashboard</p>
           </NavLink>
-          <NavLink to={"/User-courses"}>
-            <p className="cursor-pointer">📚 Enrolled Courses</p>
-          </NavLink>
-          <NavLink to={"/User-classes"}>
-            <p className="cursor-pointer">📅 Classes</p>
-          </NavLink>
+
           <NavLink to={"/User-account"}>
             <p className="cursor-pointer flex">
               <User className="w-6 h-6 text-gray-600" />
